@@ -56,6 +56,7 @@ export const borrowers = pgTable("borrowers", {
   barangay: text("barangay").notNull().default(""),
   status: borrowerStatusEnum("status").notNull().default("Active"),
   notes: text("notes").notNull().default(""),
+  archivedAt: timestamp("archived_at", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
 });
@@ -66,6 +67,7 @@ export const partners = pgTable("partners", {
   contact: text("contact").notNull().default(""),
   share: numeric("share", { precision: 5, scale: 2 }).notNull().default("0"),
   notes: text("notes").notNull().default(""),
+  archivedAt: timestamp("archived_at", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
 });
@@ -91,6 +93,7 @@ export const loans = pgTable("loans", {
   targetDate: date("target_date").notNull(),
   maturityDate: date("maturity_date").notNull(),
   status: loanStatusEnum("status").notNull().default("active"),
+  archivedAt: timestamp("archived_at", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
 });
@@ -109,6 +112,7 @@ export const payments = pgTable("payments", {
   method: text("method").notNull().default("Cash"),
   notes: text("notes").notNull().default(""),
   status: paymentStatusEnum("status").notNull().default("paid"),
+  archivedAt: timestamp("archived_at", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
 
