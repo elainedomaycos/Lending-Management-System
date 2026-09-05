@@ -1,16 +1,18 @@
-# Pautang Manager
+# Lending Management System
 
 A frontend-only lending and collections workspace for small local lending businesses.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/pautang-manager run dev` — run the frontend app
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter lending-management-system dev` — run the frontend app (defaults to port `5000`)
+- `pnpm --filter @workspace/api-server dev` — run the API server (port 5000)
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
 - Required env: `DATABASE_URL` — Postgres connection string
+
+The frontend dev server reads optional `PORT` and `BASE_PATH` environment variables and falls back to `5000` and `/` respectively.
 
 ## Stack
 
@@ -23,10 +25,9 @@ A frontend-only lending and collections workspace for small local lending busine
 
 ## Where things live
 
-- `artifacts/pautang-manager/src/App.tsx` — frontend-only app shell, routes, local mock state, business calculations, and page flows
-- `artifacts/pautang-manager/src/index.css` — Pautang Manager theme, responsive layout, tables, modals, status badges, and mobile navigation
-- `attached_assets/Pasted-Build-a-modern-clean-professional-Lending-Pautang-Manag_1788609890587.txt` — product requirements and business rules
-- `attached_assets/image_1788609880346.png` — visual reference supplied for the dashboard direction
+- `artifacts/lending-management-system/src/App.tsx` — frontend-only app shell, routes, local mock state, business calculations, and page flows
+- `artifacts/lending-management-system/src/index.css` — Lending Management System theme, responsive layout, tables, modals, status badges, and mobile navigation
+- `attached_assets/` — visual references used for the dashboard direction
 
 ## Architecture decisions
 
@@ -37,18 +38,14 @@ A frontend-only lending and collections workspace for small local lending busine
 
 ## Product
 
-Pautang Manager lets an operator manage borrowers, create and inspect daily/monthly loans, record payments, review missed collections, track partner profit and settlements, and view lending reports. It includes realistic Philippine names and peso-denominated mock records so the workflow can be demonstrated end to end.
+Lending Management System lets an operator manage borrowers, create and inspect daily/monthly loans, record payments, review missed collections, track partner profit and settlements, and view lending reports. It includes realistic Philippine names and peso-denominated mock records so the workflow can be demonstrated end to end.
 
 ## User preferences
 
- - Keep the interface in English and use Philippine Peso formatting.
- - Favor simple, professional, scan-friendly workflows over banking-style complexity.
+- Keep the interface in English and use Philippine Peso formatting.
+- Favor simple, professional, scan-friendly workflows over banking-style complexity.
 
 ## Gotchas
 
 - The app's business data is intentionally local mock state and will reset on refresh; do not describe it as production persistence.
 - The API and database workspace packages remain scaffolded but are not required by the current frontend prototype.
-
-## Pointers
-
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details

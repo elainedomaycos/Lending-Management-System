@@ -154,10 +154,18 @@
 .status-partial, .status-pending { color: hsl(30 71% 34%); background: hsl(43 89% 88%); }
 .status-missed, .status-overdue { color: hsl(1 64% 39%); background: hsl(1 71% 93%); }
 .status-extended { color: hsl(28 71% 34%); background: hsl(30 87% 90%); }
+.status-draft { color: hsl(215 28% 40%); background: hsl(215 25% 90%); }
+.status-cancelled { color: hsl(0 0% 40%); background: hsl(0 0% 90%); }
+.report-toolbar { display: inline-flex; align-items: center; gap: 8px; }
+html[data-capture] .report-toolbar { display: none !important; }
+@keyframes refresh-rotate { to { transform: rotate(360deg); } }
+.refresh-spin svg { animation: refresh-rotate .8s ease; }
 .icon-button { display: inline-flex; align-items: center; justify-content: center; border: 1px solid hsl(var(--border)); border-radius: 9px; transition: background-color .2s ease, border-color .2s ease; }
 .icon-button:hover { background: hsl(var(--muted)); border-color: hsl(var(--primary) / .35); }
-.field { width: 100%; border: 1px solid hsl(var(--input)); background: hsl(var(--card)); color: hsl(var(--foreground)); border-radius: 9px; padding: 10px 12px; outline: none; transition: border-color .2s ease, box-shadow .2s ease; }
-.field:focus { border-color: hsl(var(--primary)); box-shadow: 0 0 0 3px hsl(var(--primary) / .12); }
+@layer components {
+  .field { width: 100%; border: 1px solid hsl(var(--input)); background: hsl(var(--card)); color: hsl(var(--foreground)); border-radius: 9px; padding: 10px 12px; outline: none; transition: border-color .2s ease, box-shadow .2s ease; }
+  .field:focus { border-color: hsl(var(--primary)); box-shadow: 0 0 0 3px hsl(var(--primary) / .12); }
+}
 .modal-backdrop { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; padding: 18px; background: rgba(13, 36, 42, .48); backdrop-filter: blur(3px); }
 .modal-panel { max-height: min(90dvh, 840px); overflow-y: auto; width: min(720px, 100%); border-radius: 16px; background: hsl(var(--card)); box-shadow: 0 24px 70px rgba(13, 36, 42, .24); animation: rise-in .22s ease-out both; }
 .toast-stack { position: fixed; right: 18px; bottom: 18px; z-index: 80; display: flex; flex-direction: column; gap: 8px; }
