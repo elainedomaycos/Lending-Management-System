@@ -1,9 +1,10 @@
-# [Project name]
+# Pautang Manager
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A frontend-only lending and collections workspace for small local lending businesses.
 
 ## Run & Operate
 
+- `pnpm --filter @workspace/pautang-manager run dev` — run the frontend app
 - `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
@@ -22,23 +23,31 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/pautang-manager/src/App.tsx` — frontend-only app shell, routes, local mock state, business calculations, and page flows
+- `artifacts/pautang-manager/src/index.css` — Pautang Manager theme, responsive layout, tables, modals, status badges, and mobile navigation
+- `attached_assets/Pasted-Build-a-modern-clean-professional-Lending-Pautang-Manag_1788609890587.txt` — product requirements and business rules
+- `attached_assets/image_1788609880346.png` — visual reference supplied for the dashboard direction
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- The first release is intentionally frontend-only with realistic local mock data; backend, database, authentication, and persistence are deferred.
+- Wouter provides flat, prefix-aware client routing and the main product shell keeps navigation available across pages.
+- Lending calculations are kept transparent in the UI: interest, total due, daily target, partner profit, payment status, and remaining balance are derived from local state.
+- The primary experience is tablet landscape, with a collapsed mobile header and bottom navigation for phone use.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+Pautang Manager lets an operator manage borrowers, create and inspect daily/monthly loans, record payments, review missed collections, track partner profit and settlements, and view lending reports. It includes realistic Philippine names and peso-denominated mock records so the workflow can be demonstrated end to end.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+ - Keep the interface in English and use Philippine Peso formatting.
+ - Favor simple, professional, scan-friendly workflows over banking-style complexity.
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- The app's business data is intentionally local mock state and will reset on refresh; do not describe it as production persistence.
+- The API and database workspace packages remain scaffolded but are not required by the current frontend prototype.
 
 ## Pointers
 

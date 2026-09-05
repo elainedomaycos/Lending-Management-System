@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Pautang Manager"
+description = "A frontend-only lending and collections management workspace for small local lending businesses, with mock Philippine borrower data, loan calculations, collection tracking, partner reporting, and responsive tablet-first workflows."
+version = "1.0.0"
+id = "artifacts/pautang-manager"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18368
+
+[services.development]
+run = "pnpm --filter @workspace/pautang-manager run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/pautang-manager", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/pautang-manager/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18368"
+BASE_PATH = "/"

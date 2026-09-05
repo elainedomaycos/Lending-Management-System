@@ -1,0 +1,1239 @@
+Build a modern, clean, professional **Lending / Pautang Management System** as a **frontend-only web application prototype**.
+
+The system is intended for a small local lending business that currently manages borrowers, loans, collections, and partner/investor records manually using paper listahan. The goal is to replace the paper-based workflow with a simple digital system that is easy to understand and operate.
+
+## IMPORTANT DEVELOPMENT SCOPE
+
+For this version, build **FRONTEND ONLY**.
+
+Do NOT build:
+
+* Backend
+* Database
+* API
+* Authentication backend
+* Supabase
+* Firebase
+* Server-side logic
+* Real payment processing
+* Real user accounts
+* Production data persistence
+
+Use **realistic mock data** throughout the application.
+
+The prototype should nevertheless feel like a real, complete application. Buttons, navigation, filters, tabs, modals, forms, dropdowns, search, and other interactions should work on the frontend using mock/local state where appropriate.
+
+The backend, database, authentication, and production business logic will be implemented later.
+
+---
+
+# PRODUCT DIRECTION
+
+The application should feel like:
+
+**Simple + Professional + Clean + Practical + Easy to Learn**
+
+It should NOT look like:
+
+* A complicated banking application
+* A corporate ERP
+* An accounting software overloaded with features
+* A mobile-only application
+* An oversized accessibility interface by default
+
+The primary device is a **10–11 inch tablet in landscape orientation**, with desktop support and responsive phone support.
+
+Use a normal modern SaaS interface.
+
+## Default sizing
+
+Use standard UI sizing:
+
+* Body text: 14–16px
+* Table text: 13–15px
+* Page titles: 24–28px
+* Section titles: 18–20px
+* Buttons: 14–16px
+* Inputs: 14–16px
+* Important financial figures: 24–32px
+* Normal card padding
+* Normal spacing
+* Standard icon sizes
+
+Do NOT make everything excessively large.
+
+However, include an **optional Display Size setting**:
+
+* Standard
+* Large
+* Extra Large
+
+Default = Standard.
+
+The user can increase the interface size from Settings if needed.
+
+---
+
+# LANGUAGE
+
+Use **English only** throughout the application.
+
+Do not use Tagalog labels.
+
+Use clear, simple terminology such as:
+
+* Dashboard
+* Borrowers
+* Loans
+* Collections
+* Payments
+* Partners
+* Reports
+* Outstanding Balance
+* Payment Due
+* Missed Payment
+* Partial Payment
+* Overdue
+* Loan Maturity
+* Daily Collection
+* Monthly Collection
+
+---
+
+# DESIGN SYSTEM
+
+Create a polished SaaS dashboard design.
+
+Use:
+
+* White/light neutral backgrounds
+* Subtle borders
+* Rounded cards, but not excessively rounded
+* Clear hierarchy
+* Professional typography
+* Consistent spacing
+* Minimal shadows
+* Simple line icons
+* Clear tables
+* Clean forms
+* Consistent buttons
+
+Use a professional blue as the primary accent color.
+
+Avoid excessive gradients, glassmorphism, neon colors, excessive animations, or overly decorative elements.
+
+The interface should prioritize information clarity.
+
+## Status colors
+
+Use color together with text labels:
+
+* Green = Paid / Completed / Active
+* Yellow = Partial / Attention
+* Orange = Extended / Past target period
+* Red = Missed / Overdue
+
+Never rely on color alone to communicate status.
+
+---
+
+# RESPONSIVE DESIGN
+
+## Tablet/Desktop
+
+Primary layout:
+
+* Fixed left sidebar
+* Main content area
+* Header/top bar
+* Two-column layouts where useful
+* Tables where appropriate
+* Comfortable landscape layout
+
+## Phone
+
+Create a responsive layout.
+
+On smaller screens:
+
+* Collapse the sidebar
+* Use a bottom navigation or mobile navigation
+* Convert tables into cards where necessary
+* Stack forms vertically
+* Maintain usability without making the entire interface oversized
+
+Do NOT design the entire application as a mobile app.
+
+Tablet landscape is the primary experience.
+
+---
+
+# MAIN NAVIGATION
+
+Create the following navigation:
+
+1. Dashboard
+2. Borrowers
+3. Loans
+4. Collections
+5. Partners
+6. Reports
+7. Settings
+
+Include:
+
+* Application logo/name
+* User profile area
+* Search
+* Settings
+* Logout UI
+
+---
+
+# 1. LOGIN SCREEN
+
+Create a simple professional login screen.
+
+Fields:
+
+* PIN / Password
+
+Buttons:
+
+* Login
+* Forgot PIN
+
+For the prototype, authentication can be mocked.
+
+After clicking Login, navigate to Dashboard.
+
+---
+
+# 2. DASHBOARD
+
+Create the main overview screen.
+
+Header:
+
+"Dashboard"
+
+Subtitle:
+
+"Here's your lending activity today."
+
+Include date.
+
+Include a global borrower/loan search.
+
+## Summary cards
+
+Show:
+
+### Active Loans
+
+Example:
+24
+
+### Outstanding Balance
+
+Example:
+₱82,500
+
+### Due Today
+
+Example:
+₱6,200
+
+### Collected Today
+
+Example:
+₱4,800
+
+Cards should be compact and professional.
+
+## Today's Collections
+
+Create a table:
+
+Columns:
+
+* Borrower
+* Expected
+* Paid
+* Status
+* Action
+
+Example records:
+
+Juan Dela Cruz | ₱300 | ₱300 | Paid | View
+Maria Santos | ₱300 | ₱200 | Partial | View
+Pedro Reyes | ₱300 | ₱0 | Missed | View
+
+Include a "View All Collections" button.
+
+## Needs Attention
+
+Show sections/cards for:
+
+* Missed Payments
+* Loans Past 40 Days
+* Loans Past 60 Days
+
+Each item should allow the user to open the relevant borrower or loan.
+
+## Quick Actions
+
+Include:
+
+* New Loan
+* Record Payment
+* Add Borrower
+* View Reports
+
+---
+
+# 3. BORROWERS
+
+Create a borrower management screen.
+
+Header:
+
+"Borrowers"
+
+Include:
+
+* Search borrower
+* Search by phone
+* Add Borrower button
+
+Filters:
+
+* All
+* Active
+* Has Balance
+* Overdue
+
+## Borrower table
+
+Columns:
+
+* Borrower
+* Phone
+* Current Loan
+* Outstanding Balance
+* Collection Type
+* Status
+* Action
+
+Example:
+
+Maria Santos
+₱10,000
+₱4,500 remaining
+Daily
+Active
+
+Clicking a borrower opens the Borrower Profile.
+
+---
+
+# 4. ADD BORROWER
+
+Create a clean form.
+
+Fields:
+
+* Full Name *
+* Phone Number
+* Address
+* Barangay
+* Notes
+
+Buttons:
+
+* Save Borrower
+* Cancel
+
+After saving, show a success notification and return to Borrowers.
+
+Use frontend mock state.
+
+---
+
+# 5. BORROWER PROFILE
+
+Create a detailed borrower profile.
+
+Header:
+
+Borrower name
+
+Show:
+
+* Phone
+* Address
+* Borrower status
+
+## Current Loan Summary
+
+Display:
+
+* Principal
+* Interest
+* Total Due
+* Amount Paid
+* Remaining Balance
+* Collection Type
+* Target Date
+* Maturity Date
+* Loan Status
+
+Example:
+
+Principal: ₱10,000
+Interest: ₱2,000
+Total Due: ₱12,000
+Paid: ₱7,500
+Remaining: ₱4,500
+
+## Collection Information
+
+Show:
+
+Collection Type:
+Daily
+
+Daily Target:
+₱300
+
+Target Period:
+40 days
+
+Maximum Period:
+60 days
+
+## Payment History
+
+Table:
+
+* Date
+* Expected
+* Paid
+* Status
+
+Statuses:
+
+* Paid
+* Partial
+* Missed
+
+## Actions
+
+Buttons:
+
+* Record Payment
+* View Loan
+* Loan History
+* New Loan
+
+---
+
+# 6. NEW LOAN
+
+Create a multi-section loan creation form.
+
+## Borrower
+
+Dropdown:
+Select Borrower
+
+Allow quick "Add Borrower".
+
+## Loan Information
+
+Fields:
+
+* Principal Amount
+* Loan Date
+* Interest Rate
+* Collection Type
+
+Collection Type options:
+
+* Daily
+* Monthly
+* Lump Sum
+
+Default Interest Rate:
+
+20%
+
+Default contractual period:
+
+60 days
+
+Default daily collection target:
+
+40 days
+
+These defaults should be editable in the UI.
+
+## Automatically show calculations
+
+For example:
+
+Principal:
+₱10,000
+
+Interest Rate:
+20%
+
+Interest:
+₱2,000
+
+Total Due:
+₱12,000
+
+Do not hard-code these values into the interface. The frontend prototype should calculate them dynamically.
+
+## Daily Collection
+
+If Daily is selected:
+
+Show:
+
+Target Collection Period:
+40 days
+
+Maximum Period:
+60 days
+
+Daily Amount:
+₱300
+
+Use:
+
+Total Due ÷ Target Collection Days
+
+as the prototype calculation.
+
+Clearly separate the 40-day target from the 60-day maximum/maturity period.
+
+## Monthly Collection
+
+If Monthly is selected:
+
+Show:
+
+* Payment Frequency
+* Number of Payments
+* Expected Monthly Amount
+
+Generate a simple frontend payment schedule preview.
+
+## Partner
+
+Allow selecting:
+
+* No Partner
+* Existing Partner
+
+Fields:
+
+* Partner
+* Partner Share
+* Partner Profit
+* Business Profit
+
+For the prototype, use a default 50% partner share of the interest.
+
+Example:
+
+₱10,000 principal
+20% interest = ₱2,000 interest
+
+Partner share = 50%
+Partner profit = ₱1,000
+
+Business profit = ₱1,000
+
+## Review
+
+Before creating the loan, show a final review section.
+
+Display:
+
+Borrower
+Principal
+Interest
+Total Due
+Collection Type
+Target Date
+Maturity Date
+Partner
+Partner Profit
+
+Buttons:
+
+* Create Loan
+* Back
+* Cancel
+
+---
+
+# 7. LOAN DETAILS
+
+Create a detailed loan page.
+
+Show:
+
+* Loan Number
+* Borrower
+* Loan Status
+* Loan Date
+* Principal
+* Interest
+* Total Due
+* Paid
+* Remaining Balance
+
+Create a progress bar showing payment progress.
+
+Example:
+
+₱7,500 / ₱12,000 paid
+
+## Loan Timeline
+
+Display:
+
+Loan Start
+↓
+40-Day Collection Target
+↓
+60-Day Maturity
+↓
+Overdue
+
+Clearly distinguish:
+
+* Active
+* Extended
+* Completed
+* Overdue
+
+## Partner Information
+
+Show:
+
+Partner
+Principal Reference
+Partner Share
+Partner Profit
+Settlement Status
+
+## Actions
+
+* Record Payment
+* Edit Loan
+* View Payments
+* Print
+* Share
+
+---
+
+# 8. COLLECTIONS
+
+Create the main collection management page.
+
+Header:
+
+"Collections"
+
+Summary:
+
+* Expected Today
+* Collected Today
+* Remaining Today
+
+Filters:
+
+* All
+* Daily
+* Monthly
+* Missed Payments
+
+Table:
+
+Borrower
+Expected
+Paid
+Status
+Action
+
+Statuses:
+
+Paid
+Partial
+Missed
+Pending
+
+Each row should have a Record Payment or View button depending on status.
+
+---
+
+# 9. RECORD PAYMENT
+
+Create a modal or dedicated page for recording payments.
+
+Fields:
+
+Borrower
+Loan
+Expected Today
+Actual Payment
+Payment Method
+Notes
+
+Payment methods:
+
+* Cash
+* GCash
+* Bank Transfer
+* Other
+
+The frontend should dynamically determine:
+
+### Paid
+
+If payment >= expected amount.
+
+### Partial
+
+If payment > 0 but less than expected.
+
+### Missed
+
+If payment is ₱0 and the due date has passed.
+
+Show:
+
+Expected:
+₱300
+
+Received:
+₱200
+
+Shortfall:
+₱100
+
+Status:
+Partial
+
+After saving:
+
+* Update mock frontend state
+* Update payment history
+* Update loan balance
+* Show success notification
+
+---
+
+# 10. MISSED PAYMENTS
+
+Create a page for missed collections.
+
+Sections:
+
+* Today's Missed Payments
+* This Week's Missed Payments
+
+Table:
+
+* Borrower
+* Expected Amount
+* Missed Date
+* Missed Amount
+* Action
+
+Actions:
+
+* View Borrower
+* Record Payment
+
+Use clear "Missed" status badges.
+
+---
+
+# 11. DAILY COLLECTION CALENDAR
+
+Create a calendar/schedule view for daily loans.
+
+Allow selecting a borrower or loan.
+
+Show each date with:
+
+✓ Paid
+~ Partial
+✕ Missed
+— Not Scheduled
+
+Include a legend.
+
+Allow navigation between months.
+
+---
+
+# 12. MONTHLY COLLECTIONS
+
+Create a monthly collection page.
+
+Summary:
+
+* Due Today
+* Collected Today
+* Remaining
+
+Table:
+
+Borrower
+Due
+Paid
+Status
+Action
+
+Support:
+
+* Paid
+* Partial
+* Missed
+* Pending
+
+---
+
+# 13. PARTNERS
+
+Create a partner/investor management page.
+
+Header:
+
+"Partners"
+
+Button:
+
+Add Partner
+
+Summary cards for each partner:
+
+* Active Principal
+* Expected Profit
+* Settled
+* Pending
+
+Partner table:
+
+* Partner
+* Active Loans
+* Principal
+* Expected Profit
+* Pending Settlement
+* Action
+
+---
+
+# 14. ADD PARTNER
+
+Fields:
+
+* Name
+* Contact Number
+* Default Profit Share
+* Notes
+
+Default profit share:
+
+50%
+
+Buttons:
+
+* Save Partner
+* Cancel
+
+---
+
+# 15. PARTNER PROFILE
+
+Show:
+
+Partner name
+Contact
+Profit share
+
+Summary:
+
+* Active Principal
+* Total Partner Profit
+* Settled
+* Pending
+
+## Partner Loans
+
+Table:
+
+* Borrower
+* Loan Date
+* Principal
+* Interest
+* Partner Profit
+* Settlement Status
+* Action
+
+Actions:
+
+* View Loan
+* Generate Report
+* Record Settlement
+
+---
+
+# 16. PARTNER REPORT
+
+Create a professional report page.
+
+Filters:
+
+* Partner
+* Start Date
+* End Date
+
+Summary:
+
+* Total Loans
+* Total Principal
+* Total Interest
+* Partner Share
+* Settled
+* Pending
+
+Detailed table:
+
+* Date
+* Borrower
+* Principal
+* Interest
+* Partner Profit
+* Settlement Status
+
+Buttons:
+
+* Generate PDF
+* Print
+* Share
+
+For this frontend prototype, PDF generation can be mocked with a UI notification.
+
+---
+
+# 17. REPORTS
+
+Create a reports dashboard.
+
+Report cards:
+
+### Collection Report
+
+Daily/monthly collections.
+
+### Loan Report
+
+Loans issued and current status.
+
+### Partner Report
+
+Partner profit and settlement.
+
+### Payment History
+
+All recorded payments.
+
+### Overdue Report
+
+Loans beyond maturity.
+
+### Profit Report
+
+Interest and profit summary.
+
+Each card should have:
+
+* Description
+* View Report button
+
+---
+
+# 18. GLOBAL SEARCH
+
+Create a global search interface.
+
+Search:
+
+* Borrower name
+* Phone
+* Loan number
+
+Show categorized results:
+
+Borrowers
+Loans
+Payments
+
+Clicking a result opens the corresponding page.
+
+---
+
+# 19. SETTINGS
+
+Create a settings page with sections.
+
+## Business Information
+
+* Business Name
+* Contact
+* Address
+
+## Loan Rules
+
+* Default Interest Rate: 20%
+* Target Collection Period: 40 days
+* Maximum/Maturity Period: 60 days
+* Default Collection Type
+
+## Partner Rules
+
+* Default Partner Profit Share: 50%
+
+## Appearance
+
+Display Size:
+
+* Standard
+* Large
+* Extra Large
+
+Default:
+Standard
+
+## Security
+
+* Change PIN
+* Session Timeout
+
+## Data
+
+Since this is frontend-only:
+
+Show placeholder options:
+
+* Backup Data
+* Export Data
+
+These do not need real functionality yet.
+
+---
+
+# MOCK DATA
+
+Populate the application with realistic mock records.
+
+Create at least:
+
+* 10 borrowers
+* 15 loans
+* Daily loans
+* Monthly loans
+* Completed loans
+* Active loans
+* Partial payments
+* Missed payments
+* Extended loans
+* Overdue loans
+* Partners
+* Partner-linked loans
+* Payment histories
+
+Use realistic Philippine names and peso amounts.
+
+Example:
+
+Maria Santos
+Juan Dela Cruz
+Pedro Reyes
+Ana Garcia
+Jose Mendoza
+
+Use Philippine Peso formatting:
+
+₱10,000
+₱12,000
+₱4,500
+
+---
+
+# IMPORTANT BUSINESS LOGIC FOR THE PROTOTYPE
+
+The frontend should demonstrate these concepts.
+
+Example loan:
+
+Principal = ₱10,000
+
+Interest Rate = 20%
+
+Interest = ₱2,000
+
+Total Due = ₱12,000
+
+If target collection period = 40 days:
+
+Daily target = ₱12,000 ÷ 40 = ₱300
+
+Timeline:
+
+Day 1–40:
+Active / Target Collection
+
+Day 41–59:
+Extended / Delayed
+
+Day 60:
+Maturity
+
+Day 61+:
+Overdue
+
+Balance:
+
+Total Due − Total Valid Payments
+
+Payment status:
+
+Paid:
+Payment >= Expected
+
+Partial:
+Payment > 0 and Payment < Expected
+
+Missed:
+Payment = 0 and payment is overdue
+
+Do not implement complex financial accounting yet. Keep the logic simple and transparent.
+
+---
+
+# UX PRINCIPLES
+
+The application should minimize unnecessary typing.
+
+Prefer:
+
+* Dropdowns
+* Date pickers
+* Select controls
+* Search
+* Preset values
+* Confirmation dialogs
+* Inline calculations
+
+Do not overwhelm the user with unnecessary information.
+
+Important actions should be obvious.
+
+Examples:
+
+Primary button:
+"Record Payment"
+
+Secondary:
+"Cancel"
+
+Danger:
+"Delete" or "Cancel Loan"
+
+Use confirmation dialogs for destructive actions.
+
+---
+
+# IMPORTANT FRONTEND REQUIREMENTS
+
+The application should feel complete even though it is frontend-only.
+
+Implement:
+
+* Routing/navigation
+* Responsive layouts
+* Working sidebar
+* Working mobile navigation
+* Search
+* Filters
+* Tabs
+* Dropdowns
+* Modals
+* Forms
+* Validation
+* Toast notifications
+* Mock data
+* Dynamic calculations
+* Dynamic status badges
+* Interactive tables
+* Empty states
+* Loading states where appropriate
+* Confirmation dialogs
+
+Use reusable components.
+
+Avoid duplicated UI code.
+
+Create a consistent design system across all pages.
+
+---
+
+# FUTURE BACKEND PREPARATION
+
+Although this version is frontend-only, structure the code cleanly so a backend can be added later.
+
+Separate:
+
+* UI components
+* Pages/routes
+* Mock data
+* Business calculation utilities
+* Types/interfaces
+* State management
+
+Do not tightly couple the UI to mock data.
+
+The next development phase will replace mock data with a real database/API.
+
+---
+
+# FINAL GOAL
+
+The finished prototype should allow someone to realistically demonstrate this workflow:
+
+1. Add a borrower
+2. Create a loan
+3. Select Daily or Monthly collection
+4. See interest and total due calculated
+5. See the 40-day collection target and 60-day maturity
+6. See partner profit allocation
+7. View the loan
+8. Record a payment
+9. See the balance update
+10. Mark/show partial payments
+11. Show missed payments
+12. View collection schedules
+13. View partner information
+14. Generate/view reports
+15. Navigate the entire application naturally
+
+The result should look like a **real, polished lending management SaaS product**, while remaining **frontend-only with mock data** for now.
