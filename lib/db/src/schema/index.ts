@@ -145,6 +145,14 @@ export const settings = pgTable("settings", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
 });
 
+export const users = pgTable("users", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  name: text("name").notNull(),
+  pinHash: text("pin_hash").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
 export const insertBorrowerSchema = createInsertSchema(borrowers).omit({
   id: true,
   createdAt: true,
@@ -177,6 +185,11 @@ export const insertSettingSchema = createInsertSchema(settings).omit({
   createdAt: true,
   updatedAt: true,
 });
+export const insertUserSchema = createInsertSchema(users).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
 
 export type InsertBorrower = z.infer<typeof insertBorrowerSchema>;
 export type Borrower = typeof borrowers.$inferSelect;
@@ -192,3 +205,5 @@ export type InsertActivity = z.infer<typeof insertActivitySchema>;
 export type Activity = typeof activities.$inferSelect;
 export type InsertSetting = z.infer<typeof insertSettingSchema>;
 export type Setting = typeof settings.$inferSelect;
+export type InsertUser = z.infer<typeof insertUserSchema>;
+export type User = typeof users.$inferSelect;

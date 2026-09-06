@@ -11,6 +11,8 @@ A frontend-only lending and collections workspace for small local lending busine
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
 - Required env: `DATABASE_URL` — Postgres connection string
+- Frontend auth: the sign-in screen posts the PIN to the API (`VITE_API_URL`, defaults to `/api`); the API verifies it against the `users` table's scrypt hash. Seed via `supabase/migrations/0003_users.sql` — it provisions the owner (`Divine Valdez`) with demo PIN `1234`. Change the PIN by updating `users.pin_hash` with a new `scrypt$N$r$p$<salt>$<hash>` string (e.g. `node -e "console.log('scrypt$16384$8$1$'+require('node:crypto').randomBytes(16).toString('base64')+'$'+require('node:crypto').scryptSync(process.env.NEW_PIN,require('node:crypto').randomBytes(16),64,{N:16384,r:8,p:1}).toString('base64'))"`).
+- Vercel deploy: the API is served as a serverless function from `api/index.mjs` (pre-built bundle), configured in `artifacts/api-server/vercel.json`. Set `DATABASE_URL` in the Vercel project env.
 
 The frontend dev server reads optional `PORT` and `BASE_PATH` environment variables and falls back to `5000` and `/` respectively.
 
@@ -31,7 +33,7 @@ The frontend dev server reads optional `PORT` and `BASE_PATH` environment variab
 
 ## Architecture decisions
 
-- The first release is intentionally frontend-only with realistic local mock data; backend, database, authentication, and persistence are deferred.
+- The first release is intentionally frontend-only with realistic local mock data; a full backend API, database persistence, and account recovery (phone/email) are deferred. The sign-in PIN is validated server-side against a hashed `users.pin_hash` when the API is reachable; offline demo mode falls back to any 4-digit PIN.
 - Wouter provides flat, prefix-aware client routing and the main product shell keeps navigation available across pages.
 - Lending calculations are kept transparent in the UI: interest, total due, daily target, partner profit, payment status, and remaining balance are derived from local state.
 - The primary experience is tablet landscape, with a collapsed mobile header and bottom navigation for phone use.

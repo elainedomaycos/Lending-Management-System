@@ -23,6 +23,7 @@ import {
   updatePayment as updatePaymentRow,
 } from './lib/database';
 import { isSupabaseReady } from './lib/supabase';
+import { loginWithPin } from './lib/api';
 
 const money = (value: number) => `₱${Math.round(value).toLocaleString('en-PH')}`;
 const shortDate = (value: string) => new Date(`${value}T00:00:00`).toLocaleDateString('en-PH', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -515,7 +516,7 @@ function App() {
   const archivedPayments = payments.filter((item: Payment) => Boolean(item.archivedAt));
   const sharedProps = { borrowers, loans, partners, payments, settlements, activities, settings, updateSettings, openPayment, requestArchive, requestDelete, restoreRecord: restoreRecordAsync, setModal, setSelectedLoanId, setEditingLoanId, setEditingPartnerId, setEditingBorrowerId, setEditingPaymentId, setSelectedBorrowerId, setSelectedPartnerId, setSelectedPaymentId, showToast, onPrint: prepareReportPrint };
 
-  if (!loggedIn) return <LoginScreen onLogin={() => setLoggedIn(true)} />;
+  if (!loggedIn) return <LoginScreen onLogin={() => setLoggedIn(true)} online={!offline} />;
   if (!dataReady) return <SplashScreen offline={offline} />;
   const searchBorrowers = activeBorrowers.filter((item) => `${item.name} ${item.phone}`.toLowerCase().includes(globalSearch.toLowerCase()));
   const searchLoans = activeLoans.filter((item) => {
@@ -829,7 +830,37 @@ function RescheduleModal({ payment, onClose, onSave }: { payment?: Payment; onCl
   if (!payment) return null;
   return <Modal title="Reschedule payment" description={`Move this missed ${money(payment.expected)} to a better collection day.`} onClose={onClose}><form onSubmit={(event) => { event.preventDefault(); onSave(payment.id, date, reason); }} className="space-y-5"><Field label="Missed on" value={shortDate(payment.date)} onChange={() => undefined} testId="input-reschedule-original" /><Field label="New collection date *" value={date} onChange={setDate} testId="input-reschedule-date" /><label className="block"><span className="mb-1.5 block text-xs font-bold">Reason</span><textarea className="field min-h-20" value={reason} onChange={(event) => setReason(event.target.value)} data-testid="input-reschedule-reason" placeholder="e.g. Borrower was away at market" /></label><div className="rounded-lg bg-[hsl(var(--accent)/.5)] p-3 text-xs text-[hsl(31_62%_28%)]">The payment stays on your calendar for the new date until you record it.</div><div className="flex justify-end gap-2 pt-2"><Button variant="secondary" onClick={onClose} testId="button-cancel-reschedule">Cancel</Button><Button type="submit" icon={CalendarDays} testId="button-save-reschedule">Reschedule payment</Button></div></form></Modal>;
 }
-function LoginScreen({ onLogin }: { onLogin: () => void }) { const [pin, setPin] = useState(''); const [message, setMessage] = useState(''); return <div className="login-art flex min-h-[100dvh] items-center justify-center p-5"><div className="w-full max-w-[440px] rounded-2xl bg-[hsl(var(--card))] shadow-2xl"><div className="p-7 sm:p-10"><div className="mb-12 flex items-center gap-2"><div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[hsl(var(--primary))] text-white"><Landmark size={18} /></div><span className="font-bold">Lending Management System</span></div><div className="eyebrow">Welcome back</div><h2 className="mt-2 text-2xl font-bold tracking-[-.03em]">Sign in to your workspace</h2><p className="mt-2 text-sm text-[hsl(var(--muted-foreground))]">Enter your PIN to open today's lending desk.</p><form onSubmit={(event) => { event.preventDefault(); if (pin.length >= 4) onLogin(); else setMessage('Enter at least 4 digits to continue.'); }} className="mt-8 space-y-5"><input type="text" name="username" autoComplete="username" value="Divine Valdez" readOnly tabIndex={-1} aria-hidden="true" className="pointer-events-none absolute h-0 w-0 opacity-0" /><label className="block"><span className="mb-1.5 block text-xs font-bold">PIN</span><input type="password" inputMode="numeric" autoComplete="current-password" maxLength={6} value={pin} onChange={(event) => { setPin(event.target.value.replace(/\D/g, '')); setMessage(''); }} className="field text-center text-xl tracking-[.5em]" placeholder="₱₱₱₱" data-testid="input-login-pin" /></label>{message && <div className="flex items-center gap-2 text-xs font-semibold text-[hsl(var(--destructive))]" data-testid="text-login-error"><AlertCircle size={14} />{message}</div>}<Button type="submit" disabled={pin.length < 4} testId="button-login">Open workspace <ArrowRight size={16} /></Button></form><button onClick={() => setMessage('For this prototype, use any 4-digit PIN.')} data-testid="button-forgot-pin" className="mt-5 text-xs font-semibold text-[hsl(var(--primary))]">Forgot PIN?</button></div></div></div>; }
+function LoginScreen({ onLogin, online }: { onLogin: () => void; online: boolean }) {
+  const [pin, setPin] = useState('');
+  const [message, setMessage] = useState('');
+  const [busy, setBusy] = useState(false);
+  const submit = async (event: FormEvent) => {
+    event.preventDefault();
+    setMessage('');
+    if (pin.length < 4) {
+      setMessage('Enter at least 4 digits to continue.');
+      return;
+    }
+    if (!online) {
+      onLogin();
+      return;
+    }
+    setBusy(true);
+    try {
+      const result = await loginWithPin(pin);
+      if (result.ok) onLogin();
+      else setMessage(result.error || 'Incorrect PIN. Please try again.');
+    } catch {
+      setMessage('Cannot reach the login service. Check your connection and try again.');
+    } finally {
+      setBusy(false);
+    }
+  };
+  const forgot = () => {
+    setMessage(online ? 'The PIN is set by the workspace owner and stored as a secure hash. No phone or email is required.' : 'For this prototype, use any 4-digit PIN.');
+  };
+  return <div className="login-art flex min-h-[100dvh] items-center justify-center p-5"><div className="w-full max-w-[440px] rounded-2xl bg-[hsl(var(--card))] shadow-2xl"><div className="p-7 sm:p-10"><div className="mb-12 flex items-center gap-2"><div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[hsl(var(--sidebar-primary))] text-[hsl(var(--sidebar-primary-foreground))]"><Landmark size={18} /></div><span className="font-bold">Lending Management System</span></div><div className="eyebrow">Welcome back</div><h2 className="mt-2 text-2xl font-bold tracking-[-.03em]">Sign in to your workspace</h2><p className="mt-2 text-sm text-[hsl(var(--muted-foreground))]">Enter your PIN to open today's lending desk.</p><form onSubmit={submit} className="mt-8 space-y-5"><input type="text" name="username" autoComplete="username" value="Divine Valdez" readOnly tabIndex={-1} aria-hidden="true" className="pointer-events-none absolute h-0 w-0 opacity-0" /><label className="block"><span className="mb-1.5 block text-xs font-bold">PIN</span><input type="password" inputMode="numeric" autoComplete="current-password" maxLength={6} value={pin} onChange={(event) => { setPin(event.target.value.replace(/\D/g, '')); setMessage(''); }} className="field text-center text-xl tracking-[.5em]" placeholder="••••" data-testid="input-login-pin" /></label>{message && <div className="flex items-center gap-2 text-xs font-semibold text-[hsl(var(--destructive))]" data-testid="text-login-error"><AlertCircle size={14} />{message}</div>}<Button type="submit" disabled={pin.length < 4 || busy} testId="button-login">Open workspace <ArrowRight size={16} /></Button></form><button onClick={forgot} data-testid="button-forgot-pin" className="mt-5 text-xs font-semibold text-[hsl(var(--primary))]">Forgot PIN?</button></div></div></div>;
+}
 function NotFound() { return <div className="page-wrap flex min-h-[60vh] flex-col items-center justify-center text-center"><div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[hsl(var(--secondary))] text-[hsl(var(--primary))]"><FileText size={20} /></div><h1 className="text-2xl font-bold">Page not found</h1><p className="mt-2 text-sm text-[hsl(var(--muted-foreground))]">That page has moved or does not exist.</p><Link href="/" data-testid="link-not-found-home" className="mt-5 text-sm font-bold text-[hsl(var(--primary))]">Back to dashboard</Link></div>; }
 
 export default App;
