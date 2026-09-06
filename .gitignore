@@ -54,3 +54,7 @@ Thumbs.db
 !.env.example
 *.env.local
 supabase/.temp/
+
+# generated Vercel API bundle (copied by vercel:build)
+artifacts/lending-management-system/api/app.mjs
+artifacts/lending-management-system/api/app.mjs.map
