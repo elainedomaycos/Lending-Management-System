@@ -7,11 +7,17 @@ export interface LoginResult {
 }
 
 export async function loginWithPin(pin: string): Promise<LoginResult> {
-  const res = await fetch(`${API_URL}/auth/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ pin }),
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${API_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pin }),
+    });
+  } catch {
+    return { ok: false, error: 'Cannot reach the login service. Check your connection and try again.' };
+  }
   const data = (await res.json().catch(() => ({}))) as Partial<LoginResult>;
-  return { ok: res.ok && Boolean(data.ok), name: data.name, error: data.error };
+  if (!res.ok) return { ok: false, error: data.error || 'Cannot reach the login service. Check your connection and try again.' };
+  return { ok: Boolean(data.ok), name: data.name, error: data.error };
 }

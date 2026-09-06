@@ -4,8 +4,9 @@ A frontend-only lending and collections workspace for small local lending busine
 
 ## Run & Operate
 
-- `pnpm --filter lending-management-system dev` — run the frontend app (defaults to port `5000`)
-- `pnpm --filter @workspace/api-server dev` — run the API server (port 5000)
+- `pnpm dev` — run the API server (defaults to port `5001`) and the frontend app (defaults to port `5000`) together; the frontend dev server proxies `/api/*` to the API server, so sign-in works out of the box
+- `pnpm --filter @workspace/api-server dev` — API server only (port `5001`, override with `PORT`)
+- `pnpm --filter lending-management-system dev` — frontend only (port `5000`, override with `PORT`; set `API_PORT` to the API port if it isn't `5001`)
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
